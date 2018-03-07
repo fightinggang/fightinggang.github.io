@@ -1,0 +1,568 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Atom activate-power-mode插件安装 | 高岗的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="GaoGang">
+    
+
+    
+    <meta name="description" content="两周前在微信公众号里看到关于对Atom编辑器中酷炫效果的展示，觉得很有意思，于是去尝试了一下这个酷炫的插件。">
+<meta name="keywords" content="插件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atom activate-power-mode插件安装">
+<meta property="og:url" content="http://fightinggang.github.io/2015/12/21/Atom/index.html">
+<meta property="og:site_name" content="高岗的博客">
+<meta property="og:description" content="两周前在微信公众号里看到关于对Atom编辑器中酷炫效果的展示，觉得很有意思，于是去尝试了一下这个酷炫的插件。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez86eesslqj211e0h175h.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez86bgo9bkj20b40b4759.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/8fa46249gw1ez7hhmbxqpj20po0gyjsj.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez7hjqbj65j20ss0fgmxp.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez86zcicw5j20io0c40tl.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez86surp6ij20i80dhdgu.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/8fa46249gw1ez8710q5acj20jl075q3g.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez7hl6eeiig20e607m4qq.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ezaxih9nnoj20cy02dmx5.jpg">
+<meta property="og:updated_time" content="2018-03-07T02:31:20.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Atom activate-power-mode插件安装">
+<meta name="twitter:description" content="两周前在微信公众号里看到关于对Atom编辑器中酷炫效果的展示，觉得很有意思，于是去尝试了一下这个酷炫的插件。">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/8fa46249gw1ez86eesslqj211e0h175h.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="高岗的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="高岗的博客" title="高岗的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="高岗的博客">高岗的博客</a></h1>
+				<h2 class="blog-motto">技术分享，交流。每一天跨越自己多一段，梦和爱和相信的力量。❤</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://fightinggang.github.io/" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 8922994509170892000 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/21/Atom/" title="Atom activate-power-mode插件安装" itemprop="url">Atom activate-power-mode插件安装</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="GaoGang" target="_blank" itemprop="author">GaoGang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-21T09:48:00.000Z" itemprop="datePublished"> 发表于 2015-12-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Atom"><span class="toc-number">1.</span> <span class="toc-text">Atom</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Atom安装"><span class="toc-number">2.</span> <span class="toc-text">Atom安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件下载"><span class="toc-number">3.</span> <span class="toc-text">插件下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件安装"><span class="toc-number">4.</span> <span class="toc-text">插件安装</span></a></li></ol>
+		
+		</div>
+		
+		<p>两周前在微信公众号里看到关于对Atom编辑器中酷炫效果的展示，觉得很有意思，于是去尝试了一下这个酷炫的插件。</p>
+<a id="more"></a>
+<h2 id="Atom"><a href="#Atom" class="headerlink" title="Atom"></a>Atom</h2><p><code>Atom</code>是Github开源的文本编辑器，这个编辑器完全是使用Web技术构建的(基于Node-Webkit)。Atom的强大可以与大名鼎鼎的Sublime Text相媲美。两者界面相差也不是很多，易于上手。</p>
+<p>以下是一位知乎大神对其本质的解析：</p>
+<blockquote>
+<p>Sublime 是原生界面，脚本用的是 python；Atom 应该是基于 Chromium Embedded Framework，基本上就是个 web app，源码都是 CoffeeScript 写的，连界面都可以用 CSS 来自定义。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.zhihu.com/question/22867204/answer/22944645" target="_blank" rel="noopener">知乎–尤雨溪</a></p>
+</blockquote>
+<h2 id="Atom安装"><a href="#Atom安装" class="headerlink" title="Atom安装"></a>Atom安装</h2><p>目前<a href="https://atom.io/" target="_blank" rel="noopener">Atom官网</a>已经有了1.0版本.可以从它的官网上进行下载。</p>
+<p><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez86eesslqj211e0h175h.jpg" alt="官网首页"></p>
+<p>从网站图片就可以看出这款编辑器的精美，点击中间的红色按钮就下载就可以了。安装完成后启动界面如下图所示：<br><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez86bgo9bkj20b40b4759.jpg" alt="启动界面"></p>
+<p>下载安装完成后，难处主要实在安装<code>activate-power-mode</code>的过程。这个过程很曲折。<br></p>
+<h2 id="插件下载"><a href="#插件下载" class="headerlink" title="插件下载"></a>插件下载</h2><p>首先要从官网下载插件：<br><a href="https://atom.io/packages/activate-power-mode" target="_blank" rel="noopener">activate-power-mode</a><br><img src="http://ww4.sinaimg.cn/large/8fa46249gw1ez7hhmbxqpj20po0gyjsj.jpg" alt="插件页面"><br>进入页面后点击<code>versions</code>，会进入一个显示各个历史安装包的页面可以下载。选择适合的包进行下载。</p>
+<p>具体的下载页面如下所示：<br><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez7hjqbj65j20ss0fgmxp.jpg" alt="下载页面"></p>
+<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><p>1.在安装好Atom后右键点击，打开文件位置。可以看到文件安装在<code>C:\Users\Administrator\AppData\Local\atom\app-1.3.2</code>下。<br> <blockquote><strong>注意</strong>：（如果是安装的话，忽略这步，如果是解压的话，需要配置环境变量到path中，路径为 ：<code>~\atom\app-1.3.2\resources\app\apm\bin</code>,和JAVA_HOME类似）。</blockquote><br>2.将下载的zip包解压，放到<code>C:\Users\Administrator\.atom\packages</code>下。<br>以管理员身份运行windowsDos命令窗口，进入到~/packages/activate-power-mode下，运行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apm install</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apm install activate-power-mode</span><br></pre></td></tr></table></figure>
+<p>3.当两个命令都出现done的提示的时候，证明安装成功了。(借用CSDN的图)<br><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez86zcicw5j20io0c40tl.jpg" alt="安装成功"></p>
+<p>在安装过程中可能会出现如下错误：<br><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez86surp6ij20i80dhdgu.jpg" alt="error"><br>网上搜索后，说是缺少依赖组件产生的。需要运行如下命令：<br><strong>ps：运行这条命需要安装Git客户端</strong>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install easyimage</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ww3.sinaimg.cn/large/8fa46249gw1ez8710q5acj20jl075q3g.jpg" alt="运行相关命令后"></p>
+<p><strong>奇怪的是：我运行后还是会出现错误，但是我打开Atom编辑器已经可以使用了，希望哪位大神，弄清原理后说明一下。十分感谢！</strong></p>
+<p>安装完之后重启，打开Atom，在新建文档时，不会出现效果。需要手动加载插件（通过快捷键ctrl+alt+o​打开），就可以看到酷炫效果了！<br>最终的效果：<br><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ez7hl6eeiig20e607m4qq.gif" alt="最终效果"></p>
+<p>小技巧：去除屏幕抖动效果——shake。<br>可能会有人觉得这个插件抖动的时候看起来很不舒服，晃眼。<br>其实去掉这个效果很简单，在文件夹下<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~\.atom\packages\activate-power-mode\<span class="class"><span class="keyword">lib</span></span></span><br></pre></td></tr></table></figure></p>
+<p>找到<code>activate-power-mode.coffee</code>文件，打开-&gt;找到如下图所示文件位置。将文件中的<code>screenShake.enabled</code>改为<code>screenShake.disabled</code>即可。</p>
+<p><img src="http://ww2.sinaimg.cn/large/8fa46249gw1ezaxih9nnoj20cy02dmx5.jpg" alt="去除效果文字行"></p>
+<p></p><p>是不是看起来舒服多了呢？快开始你的编码旅程吧！</p><br>部分内容转载自：<br><br>1.<a href="http://www.jianshu.com/p/ad3e737e5dc2" target="_blank" rel="noopener">Atom与markdown</a><br>2.<a href="http://blog.sina.com.cn/s/blog_8fdfb1d90102w5h4.html" target="_blank" rel="noopener">Github Atom 安装activate power mode炫酷插件超详细教程</a><p></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/工具/">工具</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/插件/">插件</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://fightinggang.github.io/2015/12/21/Atom/" data-title="Atom activate-power-mode插件安装 | 高岗的博客" data-tsina="2409914953" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/05/28/Oracle-Sequence/" title="Oracle-Sequence">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Oracle-Sequence</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/09/24/Logo/"  title="Logo">
+ <strong>下一篇：</strong><br/> 
+ <span>Logo
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Atom"><span class="toc-number">1.</span> <span class="toc-text">Atom</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Atom安装"><span class="toc-number">2.</span> <span class="toc-text">Atom安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件下载"><span class="toc-number">3.</span> <span class="toc-text">插件下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件安装"><span class="toc-number">4.</span> <span class="toc-text">插件安装</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="fightinggang" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2409914953&verifier=aad42972&dpc=1"></iframe>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MyBatis/" title="MyBatis">MyBatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/异常处理/" title="异常处理">异常处理<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/logo/" title="logo">logo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DBMS/" title="DBMS">DBMS<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://pangjiuzala.github.io/" target="_blank" title="刘兴Blog">刘兴Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.imooc.com/" target="_blank" title="慕课网">慕课网</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.csdn.net/" target="_blank" title="CSDN">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.importnew.com/" target="_blank" title="ImportNew">ImportNew</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Geraint. This is my blog on GitHub <br/>
+			Goals will determines what are you  going to be. </p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2409914953" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/fightinggang" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:523871991@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="GaoGang">GaoGang</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

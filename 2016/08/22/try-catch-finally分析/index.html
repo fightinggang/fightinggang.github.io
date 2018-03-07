@@ -1,0 +1,591 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>try catch finally分析 | 高岗的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="GaoGang">
+    
+
+    
+    <meta name="description" content="​    最近在看Java基础，隔了好长一段时间不去接触底层的东西，好多东西就在念念不忘中忘记了，现在要重新拾起来，看的书是《Think in Java》。越看越觉得一些细微的点自己以前没有注意到，幸好这个时候看了书，要不然永远也不会记起来了。 ​    写此篇Blog并不是为了分享读书的新的，而是最近在刷脉脉的时候看到了一个很有去的题目，匿名区好多人讨论。">
+<meta name="keywords" content="异常处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="try catch finally分析">
+<meta property="og:url" content="http://fightinggang.github.io/2016/08/22/try-catch-finally分析/index.html">
+<meta property="og:site_name" content="高岗的博客">
+<meta property="og:description" content="​    最近在看Java基础，隔了好长一段时间不去接触底层的东西，好多东西就在念念不忘中忘记了，现在要重新拾起来，看的书是《Think in Java》。越看越觉得一些细微的点自己以前没有注意到，幸好这个时候看了书，要不然永远也不会记起来了。 ​    写此篇Blog并不是为了分享读书的新的，而是最近在刷脉脉的时候看到了一个很有去的题目，匿名区好多人讨论。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-07T02:31:20.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="try catch finally分析">
+<meta name="twitter:description" content="​    最近在看Java基础，隔了好长一段时间不去接触底层的东西，好多东西就在念念不忘中忘记了，现在要重新拾起来，看的书是《Think in Java》。越看越觉得一些细微的点自己以前没有注意到，幸好这个时候看了书，要不然永远也不会记起来了。 ​    写此篇Blog并不是为了分享读书的新的，而是最近在刷脉脉的时候看到了一个很有去的题目，匿名区好多人讨论。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="高岗的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="高岗的博客" title="高岗的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="高岗的博客">高岗的博客</a></h1>
+				<h2 class="blog-motto">技术分享，交流。每一天跨越自己多一段，梦和爱和相信的力量。❤</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://fightinggang.github.io/" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= 8922994509170892000 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/22/try-catch-finally分析/" title="try catch finally分析" itemprop="url">try catch finally分析</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="GaoGang" target="_blank" itemprop="author">GaoGang</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-21T16:59:59.000Z" itemprop="datePublished"> 发表于 2016-08-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>​    最近在看Java基础，隔了好长一段时间不去接触底层的东西，好多东西就在念念不忘中忘记了，现在要重新拾起来，看的书是《Think in Java》。越看越觉得一些细微的点自己以前没有注意到，幸好这个时候看了书，要不然永远也不会记起来了。</p>
+<p>​    写此篇Blog并不是为了分享读书的新的，而是最近在刷脉脉的时候看到了一个很有去的题目，匿名区好多人讨论。</p>
+<a id="more"></a>
+<p>题目是输出一段代码的运行结果，代码是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  System.out.println(convert(<span class="string">"a"</span>));</span><br><span class="line">&#125;	</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">convert</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> str;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			str.toUpperCase();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>最后程序运行的结果是:<code>a</code>   (笔者自己本地运行测试了，确实是<code>a</code>)。<br>这是很容易错的一个问题，因为一般大家会想到最后输出的是A。这就需要了解try-catch-finallly的运行机制。<br><strong>一个简单的例子(例1)：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TryCatchFinally</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String t = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            t = <span class="string">"try"</span>;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            t = <span class="string">"catch"</span>;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            t = <span class="string">"finally"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.print(TryCatchFinally.test());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>有了第一个例子，这个例子输出的结果肯定的 “try”。</p>
+<p>为什么会这样，我们不妨先看看这段代码编译出来的class对应的字节码，看虚拟机内部是如何执行的。</p>
+<p>我们用<strong>javap -verbose TryCatchFinally</strong> 来显示目标文件(.class文件)字节码信息.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">系统运行环境： windows10 64bit</span><br><span class="line">JDK基本信息：</span><br><span class="line">			java version <span class="string">"1.8.0_91"</span></span><br><span class="line">			Java(TM) SE Runtime Environment (build 1.8.0_91-b14)</span><br><span class="line">			Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)</span><br></pre></td></tr></table></figure>
+<p>.class 文件的信息:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> java.lang.<span class="function">String <span class="title">test</span><span class="params">()</span></span>;</span><br><span class="line">    descriptor: ()Ljava/lang/String;</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC, ACC_FINAL</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">1</span>, locals=<span class="number">4</span>, args_size=<span class="number">0</span></span><br><span class="line">         0: ldc           #16                 // String</span><br><span class="line">         <span class="number">2</span>: astore_0</span><br><span class="line">         3: ldc           #18                 // String try</span><br><span class="line">         <span class="number">5</span>: astore_0</span><br><span class="line">         <span class="number">6</span>: aload_0</span><br><span class="line">         <span class="number">7</span>: astore_3</span><br><span class="line">         8: ldc           #20                 // String finally</span><br><span class="line">        <span class="number">10</span>: astore_0</span><br><span class="line">        <span class="number">11</span>: aload_3</span><br><span class="line">        <span class="number">12</span>: areturn</span><br><span class="line">        <span class="number">13</span>: astore_1</span><br><span class="line">        14: ldc           #22                 // String catch</span><br><span class="line">        <span class="number">16</span>: astore_0</span><br><span class="line">        <span class="number">17</span>: aload_0</span><br><span class="line">        <span class="number">18</span>: astore_3</span><br><span class="line">        19: ldc           #20                 // String finally</span><br><span class="line">        <span class="number">21</span>: astore_0</span><br><span class="line">        <span class="number">22</span>: aload_3</span><br><span class="line">        <span class="number">23</span>: areturn</span><br><span class="line">        <span class="number">24</span>: astore_2</span><br><span class="line">        25: ldc           #20                 // String finally</span><br><span class="line">        <span class="number">27</span>: astore_0</span><br><span class="line">        <span class="number">28</span>: aload_2</span><br><span class="line">        <span class="number">29</span>: athrow</span><br><span class="line">      Exception table:</span><br><span class="line">         from    to  target type</span><br><span class="line">             <span class="number">3</span>     <span class="number">8</span>    <span class="number">13</span>   Class java/lang/Exception</span><br><span class="line">             <span class="number">3</span>     <span class="number">8</span>    <span class="number">24</span>   any</span><br><span class="line">            <span class="number">13</span>    <span class="number">19</span>    <span class="number">24</span>   any</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">5</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">8</span>: <span class="number">3</span></span><br><span class="line">        line <span class="number">9</span>: <span class="number">6</span></span><br><span class="line">        line <span class="number">15</span>: <span class="number">8</span></span><br><span class="line">        line <span class="number">9</span>: <span class="number">11</span></span><br><span class="line">        line <span class="number">10</span>: <span class="number">13</span></span><br><span class="line">        line <span class="number">12</span>: <span class="number">14</span></span><br><span class="line">        line <span class="number">13</span>: <span class="number">17</span></span><br><span class="line">        line <span class="number">15</span>: <span class="number">19</span></span><br><span class="line">        line <span class="number">13</span>: <span class="number">22</span></span><br><span class="line">        line <span class="number">14</span>: <span class="number">24</span></span><br><span class="line">        line <span class="number">15</span>: <span class="number">25</span></span><br><span class="line">        line <span class="number">16</span>: <span class="number">28</span></span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            <span class="number">3</span>      <span class="number">27</span>     <span class="number">0</span>     t   Ljava/lang/String;</span><br><span class="line">           <span class="number">14</span>      <span class="number">10</span>     <span class="number">1</span>     e   Ljava/lang/Exception;</span><br><span class="line">      StackMapTable: number_of_entries = <span class="number">2</span></span><br><span class="line">        frame_type = <span class="number">255</span> <span class="comment">/* full_frame */</span></span><br><span class="line">          offset_delta = <span class="number">13</span></span><br><span class="line">          locals = [ class java/lang/String ]</span><br><span class="line">          stack = [ class java/lang/Exception ]</span><br><span class="line">        frame_type = <span class="number">74</span> <span class="comment">/* same_locals_1_stack_item */</span></span><br><span class="line">          stack = [ class java/lang/Throwable ]</span><br><span class="line">SourceFile: <span class="string">"TryCatchFinally.java"</span></span><br></pre></td></tr></table></figure>
+<p>从以上文件可以看出：</p>
+<blockquote>
+<p>首先看<strong>LocalVariableTable</strong>信息，这里面定义了两个变量 一个是t String类型,一个是e Exception 类型<br>接下来看Code部分<br>第[0-2]行，给第0个变量赋值””，也就是String t=””；<br>第[3-6]行，也就是执行try语句块 赋值语句 ，也就是 t = “try”;<br>第7行，重点是第7行，把第s对应的值”try”付给第三个变量；<br>第[8-10] 行，对第0个变量进行赋值操作，也就是t=”finally”<br>第[11-12]行，把第三个变量对应的值返回。<br>通过字节码，我们发现，在try语句的return块中，return 返回的引用变量（t 是引用类型）并不是try语句外定义的引用变量t，而是系统重新定义了一个局部引用t’，这个引用指向了引用t对应的值，也就是try ，即使在finally语句中把引用t指向了值finally，因为return的返回引用已经不是t ，所以引用t的对应的值和try语句中的返回值无关了。</p>
+<p>​                                        –引用<a href="http://www.cnblogs.com/aigongsi/archive/2012/04/19/2457735.html/" title="java中关于try、catch、finally中的细节分析" target="_blank" rel="noopener">java中关于try、catch、finally中的细节分析</a></p>
+</blockquote>
+<p>假若将上述例子加以修改(<strong>例2</strong>)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TryCatchFinally</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"finally"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String t = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            t = <span class="string">"try"</span>;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            t = <span class="string">"catch"</span>;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            t = <span class="string">"finally"</span>;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.print(test());  <span class="comment">// 在当前类调用可不加类名</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则最后输出的结果为：”finallly”。</p>
+<p><strong>例3</strong> try抛出异常,finally无返回：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String t = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		t = <span class="string">"try"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		t = <span class="string">"catch"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		t = <span class="string">"finally"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时，解析异常，会抛出java.lang.NumberFormatException: null的异常，从try语句中的<code>Integer.parseInt(null);</code>直接跳转到catch语句中运行，t赋值为catch，</p>
+<blockquote>
+<p><a href="http://www.cnblogs.com/aigongsi/archive/2012/04/19/2457735.html/" title="java中关于try、catch、finally中的细节分析" target="_blank" rel="noopener">在执行return之前，会把返回值保存到一个临时变量里面t ‘，执行finally的逻辑，t赋值为finally，但是返回值和t’，所以变量t的值和返回值已经没有关系了，返回的是catch</a></p>
+</blockquote>
+<p><strong>例4</strong> try抛出异常,finally有返回：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"finally"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String t = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		t = <span class="string">"try"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		t = <span class="string">"catch"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		t = <span class="string">"finally"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于try语句里面抛出异常，程序转入catch语句块，catch语句在执行return语句之前执行finally，而finally语句有return,则直接执行finally的语句值，返回finally.</p>
+<p><strong>例5</strong>  try catch抛出异常,finally无返回：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String t = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		t = <span class="string">"try"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		t = <span class="string">"catch"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		t = <span class="string">"finally"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>try异常—&gt;catch—&gt;catch异常 —&gt;执行finally语句块，对t进行赋值.<br>结果是抛出java.lang.NumberFormatException异常.</p>
+<p><strong>例6</strong>  try catch抛出异常,finally有返回：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String t = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		t = <span class="string">"try"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		t = <span class="string">"catch"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		t = <span class="string">"finally"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个例子里面finally 语句里面有return语句块。try catch中运行的逻辑和上面例子一样，当catch语句块里面抛出异常之后，进入finally语句快，然后返回t。则程序忽略catch语句块里面抛出的异常信息，直接返回t对应的值 finally。</p>
+<p><strong>例7</strong>  捕获NullPointer异常：    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String t = <span class="string">""</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			t = <span class="string">"try"</span>;</span><br><span class="line">			Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (NullPointerException  e) &#123;</span><br><span class="line">			t = <span class="string">"catch"</span>;</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			t = <span class="string">"finally"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>try语句中抛出异常，进入到catch语句中，catch的是NullPointerException，而抛出的是NumberFormatException，直接进入finally语句块，finally对t赋值之后，由try语句抛出java.lang.NumberFormatException异常。</p>
+<p><strong>例8</strong>  捕获异常：    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"finally"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String t = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		t = <span class="string">"try"</span>;</span><br><span class="line">		Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">		t = <span class="string">"catch"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		t = <span class="string">"finally"</span>;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后结果是 finally</p>
+<p><strong>例9</strong>  多重异常：    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"finally"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String t = <span class="string">""</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			t = <span class="string">"try"</span>;</span><br><span class="line">			Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			t = <span class="string">"catch"</span>;</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			t = <span class="string">"finally"</span>;</span><br><span class="line">			Integer.parseInt(<span class="keyword">null</span>);</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>首先程序执行try语句，异常后进入catch语句执行，在返回执行执行finally语句块，finally语句抛出NumberFormatException异常，整个结果返回NumberFormatException异常。</p>
+<p><strong>总结:</strong></p>
+<ol>
+<li>try、catch、finally语句中，若try中有return语句，不跑出异常的情况下当前try中变量此时对应的值，此后对变量做任何的修改，都不影响try中return的返回值；</li>
+<li>若finally块中有return 语句，则返回try或catch中的返回语句忽略；</li>
+<li>若finally块中抛出异常，则整个try、catch、finally块中抛出异常。</li>
+</ol>
+<p>所以使用try、catch、finally语句块中需要注意的是:</p>
+<ol>
+<li>尽量在try或者catch中使用return语句。</li>
+<li>finally块中避免使用return语句，因为finally块中使用return语句会覆盖掉try、catch中的异常信息。</li>
+<li>finally块中避免再次抛出异常，否则整个包含try语句块的方法回抛出异常，并且会消化掉try、catch块中的异常。</li>
+</ol>
+<p>在平常的异常处理中，try-catch负责对异常的捕获处理，而finallly块则负责收尾工作。例如在程序开发中流的关闭，连接的关闭等等。</p>
+<p>参考链接：<br>1.<a href="http://www.cnblogs.com/aigongsi/archive/2012/04/19/2457735.html" target="_blank" rel="noopener">java中关于try、catch、finally中的细节分析</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/技术/">技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/异常处理/">异常处理</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://fightinggang.github.io/2016/08/22/try-catch-finally分析/" data-title="try catch finally分析 | 高岗的博客" data-tsina="2409914953" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/12/14/Mybatis批量操作/" title="Mybatis批量操作">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Mybatis批量操作</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/12/乐观锁与悲观锁/"  title="乐观锁与悲观锁">
+ <strong>下一篇：</strong><br/> 
+ <span>乐观锁与悲观锁
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="fightinggang" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=2409914953&verifier=aad42972&dpc=1"></iframe>
+</div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/插件/" title="插件">插件<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MyBatis/" title="MyBatis">MyBatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/异常处理/" title="异常处理">异常处理<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/logo/" title="logo">logo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DBMS/" title="DBMS">DBMS<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://pangjiuzala.github.io/" target="_blank" title="刘兴Blog">刘兴Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.imooc.com/" target="_blank" title="慕课网">慕课网</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.csdn.net/" target="_blank" title="CSDN">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.importnew.com/" target="_blank" title="ImportNew">ImportNew</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Geraint. This is my blog on GitHub <br/>
+			Goals will determines what are you  going to be. </p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2409914953" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/fightinggang" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:523871991@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="GaoGang">GaoGang</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
