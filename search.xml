@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Redis In Action(Chapter 1&2)]]></title>
+    <url>%2F2018%2F07%2F22%2FRedis-In-Action-Chapter-1-2%2F</url>
+    <content type="text"><![CDATA[深入学习 Redis 的事情，要早早的提上日程。 ​ 《Redis 实战》这本书前段时间就买了，一直没有抽出时间去看。这周六和女朋友去湖北省图书馆看书，顺带就拿上这本书去看，之前看了第一章，没怎么理解。这次连看了一二章，对其中的理解更深入了些。 2018.07.22 工作三周年 ​ Redis 在面试的时候经常会被问到，在互联网公司中已成为一个必不可少的中间件。一般平时使用基本命令就已足够，但是对常用的命令也要熟悉，什么数据用什么类型用什么命令，然后再去理解 Redis 的原理会学习的更快些。 推荐两个官方网站：Redis官网（ 英文 中文） 在线操作 ​ 读完前两章，对 Redis 的优势及相应的使用场景有了一些了解。同时，前两章主要是通过两个简单例子说明了 Redis 的使用，加深了对 Redis 的理解。下面是我整理的一些学习到的内容。 插入还是更新 &gt; 插入行的操作执行速度非常快（插入文件只会在硬盘文件末尾进行写入）。对表数据更新则是一个比较慢的操作，这种更新除了会引起一次随机读之外，还会引起一次随机写操作。 ​ 以前，使用关系型数据库的时候，有时候会纠结是新增还是更新，现在算是查到了理论基础。一般数据库的数据是存储在硬盘中，插入的话只是在硬盘文件末尾追加写入。但是更新操作，需要把命令转化，使用查询分析器去硬盘中查询（还涉及到查询优化器），获取到数据的时候再去数据库中进行更新操作。相对来说做了很多操作。而使用 Redis，数据存储在内存中，发送给 Redis 的命令不需要经过查询分析器与查询优化器，可直接通过接收到的指令对数据进行操作，故写的时候速度很快。 数据结构Redis 的 数据类型有 5 种（网上已有太多介绍，目前只写下自己觉得有用的）： string 字符串 list 列表（对链表的支持），插入可以左右插入 LPUSH RPUSH,左右移除 LPOP RPOP set 无序集合 不能左右添加移除 hash Map zset 有序 Map（key -&gt; member value -&gt; score(必须为浮点数)） 前两章的内容，相对来说，比较简单，是一个入门的教程。大概就记录下。从第 3 章开始介绍详细的命令，后续再介绍。需要多通过 在线操作 来练习命令。（好处是不用自己买服务器搭Redis 了。插个题外话，之前买的服务器搭了 Redis，不知道开启了什么导致一直端口扫描，服务器提供商直接把服务器封了，然后我用我蹩脚的英语沟通，终于解开了，在英文不好的情况下暂时就不在服务器上瞎搞了。）]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Next 主题美化]]></title>
     <url>%2F2018%2F06%2F25%2FNext-%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96%2F</url>
     <content type="text"><![CDATA[换上简洁大气的 Next 主题后，总要折腾一番才符合 猿 的气质。 站内搜索原文地址：Local-search 安装 hexo-generator-searchdb，在 blog 根目录下执行命令： 1$ npm install hexo-generator-searchdb --save 编辑 blog 目录下的配置文件，新增以下内容到任意位置： 12345search: path: search.xml field: post format: html limit: 10000 编辑 主题配置文件，启用本地搜索功能： 123# Local searchlocal_search: enable: true 重新构建就可以看到效果 字数统计参照 hexo-symbols-count-time Next 内置标签居中引用123456789&lt;!-- HTML方式: 直接在 Markdown 文件中编写 HTML 来调用 --&gt;&lt;!-- 其中 class="blockquote-center" 是必须的 --&gt;&lt;blockquote class="blockquote-center"&gt; Content &lt;/blockquote&gt;&lt;!-- 标签 方式，要求版本在0.4.5或以上 --&gt;&#123;% centerquote %&#125; Content &#123;% endcenterquote %&#125;&lt;!-- 标签别名 --&gt;&#123;% cq %&#125; Content &#123;% endcq %&#125; 效果：横眉冷对千夫指，俯首甘为孺子牛。–鲁迅 彩色引用块 1&#123;% note className %&#125; 内容块 &#123;% endnote %&#125; className 可以为：default primary success info warning danger 效果：success markdown 默认]]></content>
@@ -14,7 +25,7 @@
   <entry>
     <title><![CDATA[新开始]]></title>
     <url>%2F2018%2F06%2F24%2F%E6%96%B0%E5%BC%80%E5%A7%8B%2F</url>
-    <content type="text"><![CDATA[​ 自从 2016 年搭建好博客后，断断续续的写了几篇博客后，这个博客就停更了！！！​ 原因有很多，最重要的可能还是惰性与自卑吧！觉得技术一般没什么可以分享的，然后就搁置了。 转眼间到了 2018 年，来到了武汉，经历过许多事情，也应该给自己一个改变。就像漫威宇宙重启一样，我也要重启我的博客，抛弃必要时的不自卑与非必要时的自负，做一个谦虚扎实的人！ 定一个小目标：每周记录至少更新一篇技术博客！共勉！ PS: 2018 年才完成了 2016 年的一个小目标，注册一个公众号，去维护它。]]></content>
+    <content type="text"><![CDATA[​ 自从 2015 年搭建好博客后，断断续续的写了几篇博客后，这个博客就停更了！！！​ 原因有很多，最重要的可能还是惰性与自卑吧！觉得技术一般没什么可以分享的，然后就搁置了。 转眼间到了 2018 年，来到了武汉，经历过许多事情，也应该给自己一个改变。就像漫威宇宙重启一样，我也要重启我的博客，抛弃必要时的不自卑与非必要时的自负，做一个谦虚扎实的人！ 定一个小目标：每周记录至少更新一篇技术博客！共勉！ PS: 2018 年才完成了 2016 年的一个小目标，注册一个公众号，去维护它。]]></content>
       <categories>
         <category>随笔</category>
       </categories>
